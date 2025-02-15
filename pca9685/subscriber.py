@@ -8,7 +8,15 @@ class PCA9685SubscriberNode(Node):
     def __init__(self):
         super().__init__('pca9685_subscriber')
         
-        config = PCA9685Config()
+        # Declare parameters with default values
+        self.declare_parameter('bus', 1)
+        self.declare_parameter('address', 0x40)
+        
+        # Retrieve parameter values
+        bus = self.get_parameter('bus').value
+        address = self.get_parameter('address').value
+
+        config = PCA9685Config(busnum=bus, address=address, frequency=60)
         self.pca9685 = PCA9685(config=config)
         
         self.get_parameter('config')
@@ -34,6 +42,7 @@ class PCA9685SubscriberNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
+
     node = PCA9685SubscriberNode()
     try:
         rclpy.spin(node)
