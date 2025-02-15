@@ -63,14 +63,14 @@ To include this package in a parent project:
 Add as a submodule:
 
 ```bash
-cd ~/your_parent_project/src
-git submodule add <your-repo-url>
+cd ~/<your_workspace>/src
+git submodule add <your-repo-url>  <>
 ```
 
 Build the parent workspace:
 
 ```bash
-cd ~/your_parent_project
+cd ~/<your_workspace>
 colcon build --symlink-install
 source install/setup.bash
 ```
