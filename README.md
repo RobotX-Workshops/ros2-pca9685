@@ -76,10 +76,15 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-Run your node as usual:
+Run your node as usual with a Bus and Address parameter:
 
 ```bash
-ros2 run pca9685 <node_executable_name>
+ros2 run pca9685 subscriber --ros-args -p bus:=1 -p address:=65
+```
+
+Send a pulse command to the board:
+```bash
+ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [0, 150]}" --once
 ```
 
 ## Usage
