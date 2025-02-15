@@ -54,7 +54,7 @@ source ~/<your_workspace>/install/setup.bash
 Run your node:
 
 ```bash
-ros2 run pca9685 <node_executable_name>
+ros2 run pca9685 subscriber
 ```
 
 ## Including as a Subrepository (Subrepo)
@@ -90,12 +90,6 @@ After building and sourcing your workspace, run your node using:
 ros2 run pca9685 <node_executable_name>
 ```
 
-For example, if your package name is my_ros2_package and you have a node executable called my_node, run:
-
-```bash
-ros2 run my_ros2_package my_node
-```
-
 ## License
 
 This project is licensed under the Apache License 2.0.
@@ -105,4 +99,5 @@ This project is licensed under the Apache License 2.0.
 [Andrew Johnson](https://github.com/anjrew) – Maintainer – andrewmjohnson549@gmail.com
 
 ## Contributing
+
 Contributions are welcome via PR!

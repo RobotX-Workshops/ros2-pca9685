@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'subscriber = pca9685.subscriber:main'
         ],
     },
+
 )
