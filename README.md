@@ -92,7 +92,7 @@ ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --on
 After building and sourcing your workspace, run your node using:
 
 ```bash
-ros2 run pca9685 <node_executable_name>
+ros2 run pca9685 subscriber
 ```
 
 ## License
