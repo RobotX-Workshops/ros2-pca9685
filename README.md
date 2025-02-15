@@ -82,6 +82,7 @@ ros2 run pca9685 <node_executable_name>
 ```
 
 ## Usage
+
 After building and sourcing your workspace, run your node using:
 
 ```bash
@@ -94,11 +95,13 @@ For example, if your package name is my_ros2_package and you have a node executa
 ros2 run my_ros2_package my_node
 ```
 
-License
+## License
+
 This project is licensed under the Apache License 2.0.
 
 ## Maintainers
-Your Name – Maintainer – andrewmjohnson549@gmail.com
+
+[Andrew Johnson](https://github.com/anjrew) – Maintainer – andrewmjohnson549@gmail.com
 
 ## Contributing
 Contributions are welcome via PR!
