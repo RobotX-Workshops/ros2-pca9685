@@ -82,9 +82,9 @@ Run your node as usual with a Bus and Address parameter:
 ros2 run pca9685 subscriber --ros-args -p bus:=1 -p address:=65
 ```
 
-Send a pulse command to the board:
+Send a pulse command to the board. In the example send a pulse to channel 1 with a pulse width of 300:
 ```bash
-ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [0, 150]}" --once
+ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --once
 ```
 
 ## Usage
