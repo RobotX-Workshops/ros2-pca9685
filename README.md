@@ -64,7 +64,7 @@ Add as a submodule:
 
 ```bash
 cd ~/<your_workspace>/src
-git submodule add <your-repo-url>  <>
+git submodule add <your-repo-url>  pca9685
 ```
 
 Build the parent workspace:
