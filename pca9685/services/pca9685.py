@@ -2,7 +2,7 @@
 import time
 
 import Adafruit_PCA9685
-from packages.pca9685.models.config import PCA9685Config
+from pca9685.models.config import PCA9685Config
 
 class PCA9685:
     def __init__(
@@ -11,10 +11,10 @@ class PCA9685:
         init_delay: float = 0.1,
     ):
         default_freq = 60
-        frequency = config.hardware.frequency
+        frequency = config.frequency
         self.pwm_scale = frequency / default_freq
         self.pwm = Adafruit_PCA9685.PCA9685(
-            address=config.hardware.address, busnum=config.hardware.busnum
+            address=config.address, busnum=config.busnum
         )
         self.pwm.set_pwm_freq(frequency)
         time.sleep(init_delay)  # Sometimes servos make a little leap otherwise

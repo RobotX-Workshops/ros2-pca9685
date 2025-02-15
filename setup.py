@@ -11,7 +11,10 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+	'setuptools',
+	'Adafruit-PCA9685'
+	],
     zip_safe=True,
     maintainer='aj',
     maintainer_email='andrewmjohnson549@gmail.com',
