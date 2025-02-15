@@ -19,8 +19,6 @@ class PCA9685SubscriberNode(Node):
         config = PCA9685Config(busnum=bus, address=address, frequency=60)
         self.pca9685 = PCA9685(config=config)
         
-        self.get_parameter('config')
-
         # Create subscriber to listen on the `/pwm_channel` topic
         self.subscription = self.create_subscription(
             Int32MultiArray,
