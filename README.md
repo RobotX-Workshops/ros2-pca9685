@@ -54,7 +54,7 @@ source ~/<your_workspace>/install/setup.bash
 Run your node:
 
 ```bash
-ros2 run pca9685 subscriber
+ros2 run pca9685 pca9685_node
 ```
 
 ## Including as a Subrepository (Subrepo)
@@ -79,12 +79,12 @@ source install/setup.bash
 Run your node as usual with a Bus and Address parameter:
 
 ```bash
-ros2 run pca9685 subscriber --ros-args -p bus:=1 -p address:=65
+ros2 run pca9685 pca9685_node --ros-args -p bus:=1 -p address:=65
 ```
 
 Send a pulse command to the board. In the example send a pulse to channel 1 with a pulse width of 300:
 ```bash
-ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --once
+ros2 topic pub /pwm_command std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --once
 ```
 
 ## Usage
@@ -92,7 +92,7 @@ ros2 topic pub /pwm_channel std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --on
 After building and sourcing your workspace, run your node using:
 
 ```bash
-ros2 run pca9685 subscriber
+ros2 run pca9685 pca9685_node
 ```
 
 ## License

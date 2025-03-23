@@ -12,7 +12,7 @@ setup(
     ],
     install_requires=["setuptools", "adafruit-pca9685"],
     zip_safe=True,
-    maintainer="aj",
+    maintainer="Andrew Johnson",
     maintainer_email="andrewmjohnson549@gmail.com",
     description="A package for sening pulse width modulation signals to a PCA9685 board",
     license="Apache License 2.0",
