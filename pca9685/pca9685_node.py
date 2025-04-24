@@ -25,14 +25,6 @@ class PCA9685SubscriberNode(Node):
         config = PCA9685Config(busnum=bus, address=address, frequency=frequency)
         self.pca9685 = PCA9685(config=config)
 
-        # Create subscriber to listen on the `/pwm_command` topic
-        self.subscription = self.create_subscription(
-            Int32MultiArray,
-            "/pwm_command",
-            self.listener_callback,
-            10,  # Queue size
-        )
-
         # Create a dictionary to hold subscribers
         self.channel_subscriptions = {}
 
@@ -65,15 +57,6 @@ class PCA9685SubscriberNode(Node):
             # self.get_logger().debug(f"Set pulse {pulse} for channel {channel}") # Uncomment for debugging
         except Exception as e:
             self.get_logger().error(f"Error setting pulse for channel {channel}: {e}")
-
-    def listener_callback(self, msg: Int32MultiArray):
-        # Assuming msg.data contains [channel, pulse]
-        if len(msg.data) == 2:
-            channel = msg.data[0]
-            pulse = msg.data[1]
-            self.pca9685.set_pulse(channel, pulse)
-        else:
-            self.get_logger().error("Received message with unexpected length")
 
 
 def main(args=None):
