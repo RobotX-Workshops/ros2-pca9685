@@ -18,6 +18,6 @@ setup(
     license="Apache License 2.0",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["pca9685_node = pca9685.subscriber:main"],
+        "console_scripts": ["pca9685_node = pca9685.pca9685_node:main"],
     },
 )

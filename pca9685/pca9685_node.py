@@ -5,6 +5,7 @@ from rclpy.node import Node  # Import the Node class
 from std_msgs.msg import (
     Int32MultiArray,
 )  # Import standard message type for two integers (channel, pulse)
+from std_msgs.msg import Int32
 
 
 class PCA9685SubscriberNode(Node):
@@ -31,6 +32,39 @@ class PCA9685SubscriberNode(Node):
             self.listener_callback,
             10,  # Queue size
         )
+
+        # Create a dictionary to hold subscribers
+        self.channel_subscriptions = {}
+
+        # Create a subscriber for each channel
+        number_of_channels = 16  # PCA9685 always has 16 channels
+        for i in range(number_of_channels):
+            topic_name = f"/pwm_channel/{i}"
+            self.channel_subscriptions[i] = self.create_subscription(
+                Int32,
+                topic_name,
+                lambda msg, channel=i: self.channel_listener_callback(msg, channel),
+                10,  # Queue size
+            )
+        self.get_logger().info(f"Subscribing to {number_of_channels} if channels")
+
+    def channel_listener_callback(self, msg: Int32, channel: int):
+        """
+        Callback function for individual channel subscriptions.
+        Receives a single Int32 message representing the pulse.
+        """
+        pulse = msg.data
+        # Optional: Add validation for pulse value if needed (e.g., 0 to 4095)
+        if not 0 <= pulse <= 4095:
+            self.get_logger().warn(
+                f"Received pulse value {pulse} out of typical range for channel {channel}. Setting anyway."
+            )
+
+        try:
+            self.pca9685.set_pulse(channel, pulse)
+            # self.get_logger().debug(f"Set pulse {pulse} for channel {channel}") # Uncomment for debugging
+        except Exception as e:
+            self.get_logger().error(f"Error setting pulse for channel {channel}: {e}")
 
     def listener_callback(self, msg: Int32MultiArray):
         # Assuming msg.data contains [channel, pulse]
