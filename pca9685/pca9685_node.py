@@ -1,10 +1,9 @@
+import gc
 from pca9685.models.config import PCA9685Config
 from pca9685.services.pca9685 import PCA9685
-import rclpy  # Import ROS 2 Python client library
-from rclpy.node import Node  # Import the Node class
-from std_msgs.msg import (
-    Int32MultiArray,
-)  # Import standard message type for two integers (channel, pulse)
+from py_gap_follower.gc import GcConfig, GcThresholds
+import rclpy
+from rclpy.node import Node
 from std_msgs.msg import Int32
 
 
@@ -16,6 +15,13 @@ class PCA9685SubscriberNode(Node):
         self.declare_parameter("bus", 1)
         self.declare_parameter("address", 0x40)
         self.declare_parameter("frequency", 60)
+
+        # Declare Garbabge Collector parameters
+        self.declare_parameter("gc.disable", False)
+        self.declare_parameter("gc.show_stats", False)
+        self.declare_parameter("gc.thresholds.gen_0", 700)
+        self.declare_parameter("gc.thresholds.gen_1", 10)
+        self.declare_parameter("gc.thresholds.gen_2", 10)
 
         # Retrieve parameter values
         bus = self.get_parameter("bus").get_parameter_value().integer_value
@@ -39,6 +45,40 @@ class PCA9685SubscriberNode(Node):
                 10,  # Queue size
             )
         self.get_logger().info(f"Subscribing to {number_of_channels} if channels")
+
+        gc_config = GcConfig(
+            disable=self.get_parameter("gc.disable").get_parameter_value().bool_value,
+            show_stats=self.get_parameter("gc.show_stats")
+            .get_parameter_value()
+            .bool_value,
+            thresholds=GcThresholds(
+                gen_0=self.get_parameter("gc.thresholds.gen_0")
+                .get_parameter_value()
+                .integer_value,
+                gen_1=self.get_parameter("gc.thresholds.gen_1")
+                .get_parameter_value()
+                .integer_value,
+                gen_2=self.get_parameter("gc.thresholds.gen_2")
+                .get_parameter_value()
+                .integer_value,
+            ),
+        )
+        if gc_config.disable:
+            self.get_logger().info("Garbage collector disabled")
+            gc.disable()
+        else:
+            self.get_logger().info("Garbage collector enabled")
+            gc.enable()
+            # Set the garbage collector thresholds
+            gc.set_stats(gc_config.show_stats)
+            gc.set_threshold(
+                gc_config.thresholds.gen_0,
+                gc_config.thresholds.gen_1,
+                gc_config.thresholds.gen_2,
+            )
+            self.get_logger().info(
+                f"Garbage collector thresholds set to {gc_config.thresholds}"
+            )
 
     def channel_listener_callback(self, msg: Int32, channel: int):
         """
