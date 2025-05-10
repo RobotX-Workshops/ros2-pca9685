@@ -18,7 +18,6 @@ class PCA9685SubscriberNode(Node):
 
         # Declare Garbabge Collector parameters
         self.declare_parameter("gc.disable", False)
-        self.declare_parameter("gc.show_stats", False)
         self.declare_parameter("gc.thresholds.gen_0", 700)
         self.declare_parameter("gc.thresholds.gen_1", 10)
         self.declare_parameter("gc.thresholds.gen_2", 10)
@@ -37,20 +36,17 @@ class PCA9685SubscriberNode(Node):
         # Create a subscriber for each channel
         number_of_channels = 16  # PCA9685 always has 16 channels
         for i in range(number_of_channels):
-            topic_name = f"/pwm_channel/{i}"
+            topic_name = f"/pwm_channel_{i}"
             self.channel_subscriptions[i] = self.create_subscription(
                 Int32,
                 topic_name,
-                lambda msg, channel=i: self.channel_listener_callback(msg, channel),
+                lambda msg, channel=i: self.channel_listener_callback(msg, channel),  # type: ignore
                 10,  # Queue size
             )
         self.get_logger().info(f"Subscribing to {number_of_channels} if channels")
 
         gc_config = GcConfig(
             disable=self.get_parameter("gc.disable").get_parameter_value().bool_value,
-            show_stats=self.get_parameter("gc.show_stats")
-            .get_parameter_value()
-            .bool_value,
             thresholds=GcThresholds(
                 gen_0=self.get_parameter("gc.thresholds.gen_0")
                 .get_parameter_value()
@@ -70,7 +66,6 @@ class PCA9685SubscriberNode(Node):
             self.get_logger().info("Garbage collector enabled")
             gc.enable()
             # Set the garbage collector thresholds
-            gc.set_stats(gc_config.show_stats)
             gc.set_threshold(
                 gc_config.thresholds.gen_0,
                 gc_config.thresholds.gen_1,
