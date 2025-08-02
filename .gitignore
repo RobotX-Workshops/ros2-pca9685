@@ -2,3 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# ROS 2 build and install directories
+**/build/
+**/install/
+**/log/

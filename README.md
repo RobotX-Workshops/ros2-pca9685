@@ -5,7 +5,7 @@ A modular ROS 2 package that contains a node for interacting with a PCA9685 PW
 This package is designed to be built in a standalone ROS 2 workspace or included as a subrepository (subrepo) in larger projects.
 
 ## Features
-- Contains a ROS 2 python node.
+- Contains a ROS 2 C++ node.
 - Easily integrated as a subrepo in a parent workspace.
 - Uses standard ROS 2 tools (colcon, rosdep) for building and dependency management.
 
@@ -80,11 +80,6 @@ Run your node as usual with a Bus and Address parameter:
 
 ```bash
 ros2 run pca9685 pca9685_node --ros-args -p bus:=1 -p address:=65
-```
-
-Send a pulse command to the board. In the example send a pulse to channel 1 with a pulse width of 300:
-```bash
-ros2 topic pub /pwm_command std_msgs/msg/Int32MultiArray "{data: [1, 300]}" --once
 ```
 
 ## Usage
