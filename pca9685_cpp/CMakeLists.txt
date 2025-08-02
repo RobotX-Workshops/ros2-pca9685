@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(pca9685_cpp)
+project(pca9685)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -34,7 +34,7 @@ target_link_libraries(pca9685_executable pca9685_node)
 
 # Export the node component so it can be used by composition
 rclcpp_components_register_node(pca9685_node
-  PLUGIN "pca9685_cpp::PCA9685Node"
+  PLUGIN "pca9685::PCA9685Node"
   EXECUTABLE pca9685_executable)
 
 # Install targets
