@@ -2,6 +2,7 @@
 #define PCA9685__PCA9685_DRIVER_HPP_
 
 #include <string>
+#include <cstdint>
 
 namespace pca9685
 {

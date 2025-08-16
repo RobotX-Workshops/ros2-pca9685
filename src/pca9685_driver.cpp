@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <cmath>
 #include <stdexcept>
+#include <cstdint>
 
 // PCA9685 Registers
 constexpr uint8_t MODE1 = 0x00;
