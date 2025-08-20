@@ -90,6 +90,51 @@ After building and sourcing your workspace, run your node using:
 ros2 run pca9685 pca9685_node
 ```
 
+### Parameters
+
+The PCA9685 node accepts the following parameters:
+
+- `bus` (int, default: 1): I2C bus number
+- `address` (int, default: 0x40): I2C device address in hexadecimal
+- `frequency` (int, default: 60): PWM frequency in Hz
+- `enabled_channels` (vector<bool>, default: all true): List of 16 boolean values indicating which channels to enable
+
+### Channel Configuration
+
+The `enabled_channels` parameter allows you to specify which of the 16 PWM channels should be initialized. This is useful for:
+- Reducing unnecessary topic subscriptions
+- Preventing accidental control of unused channels
+- Optimizing resource usage
+
+Example configuration file (`config/pca9685_example.yaml`):
+
+```yaml
+pca9685_node:
+  ros__parameters:
+    bus: 1
+    address: 0x40
+    frequency: 60
+    enabled_channels: [
+      true,   # Channel 0  - enabled (e.g., steering servo)
+      true,   # Channel 1  - enabled (e.g., throttle ESC)
+      false,  # Channel 2  - disabled
+      false,  # Channel 3  - disabled
+      # ... remaining channels
+      false   # Channel 15 - disabled
+    ]
+```
+
+Run with configuration:
+
+```bash
+ros2 run pca9685 pca9685_node --ros-args --params-file src/pca9685/config/pca9685_example.yaml
+```
+
+### Topics
+
+For each enabled channel `N`, the node subscribes to:
+- `/pwm_channel_N` (std_msgs/Int32): PWM pulse width value (0-4095)
+
 ## License
 
 This project is licensed under the Apache License 2.0.

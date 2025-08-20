@@ -1,0 +1,28 @@
+pca9685_node:
+  ros__parameters:
+    # Hardware configuration
+    bus: 1              # I2C bus number
+    address: 0x40       # I2C device address (hexadecimal)
+    frequency: 60       # PWM frequency in Hz
+    
+    # Channel configuration - 16 boolean values (one per channel)
+    # Index 0 = Channel 0, Index 1 = Channel 1, etc.
+    # true = enable channel, false = disable channel
+    enabled_channels: [
+      true,   # Channel 0  - enabled
+      true,   # Channel 1  - enabled
+      false,  # Channel 2  - disabled
+      false,  # Channel 3  - disabled
+      false,  # Channel 4  - disabled
+      false,  # Channel 5  - disabled
+      false,  # Channel 6  - disabled
+      false,  # Channel 7  - disabled
+      false,  # Channel 8  - disabled
+      false,  # Channel 9  - disabled
+      false,  # Channel 10 - disabled
+      false,  # Channel 11 - disabled
+      false,  # Channel 12 - disabled
+      false,  # Channel 13 - disabled
+      false,  # Channel 14 - disabled
+      false   # Channel 15 - disabled
+    ]
