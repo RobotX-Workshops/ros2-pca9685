@@ -13,6 +13,7 @@ find_package(std_msgs REQUIRED)
 
 # Add the library for the PCA9685 hardware logic
 add_library(pca9685_driver src/pca9685_driver.cpp)
+set_target_properties(pca9685_driver PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(pca9685_driver PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
